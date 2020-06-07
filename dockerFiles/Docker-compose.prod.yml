@@ -1,4 +1,4 @@
 version: '3'
 services: 
-  node:
+  front:
     command: sh -c "cd next && yarn build && yarn start"
