@@ -449,6 +449,7 @@ Next.jsでは最小限の構成でReactを離れる事なく、任意のペー�
 
 Next.jsは `App`コンポーネントを使用してページの初期化をする。
 これをオーバーライドすることで初期化を制御することができる。
+サーバーでもクライアントでも動く。
 
 - ページ遷移間でのlayoutの永続化
 - ページ間での状態の維持
@@ -488,6 +489,7 @@ export default MyApp
 
 <html>と<body>タグを拡張するために使う。
 これらはNext.jsページが周囲のドキュメントのマークアップの定義をスキップするために必要です。
+サーバーサイドでのみ実行される。イベントハンドラは実行されない。
 
 ```
 class MyDocument extends Document {
@@ -600,3 +602,24 @@ package.jsonに
 "dev": "NODE_OPTIONS='--inspect' next dev"
 ```
 https://developers.google.com/web/tools/chrome-devtools/javascript
+
+### styled component
+
+```
+// styled-components以前
+<Button className='button'></Button>
+<Button className='button button--primary'></Button>
+
+// styled-components
+<Button><Button/>
+<Button primary></Button>
+```
+
+### propsの使い分け
+
+|| サーバーサイド | クライアントサイド | 実行タイミング |
+--- | --- | --- | ----
+| getStaticProps | ◯ | ✗ | ビルド時 (+ fallback=trueならリクエストに応じて) |
+| getStaticPaths | ◯ | ✗ | ビルド時のみ |
+| getServerSideProps | ◯ | ✗ | リクエストに応じて |
+| getInitialProps | ◯ | ◯ | リクエストに応じて |
